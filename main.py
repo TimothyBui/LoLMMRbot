@@ -1,7 +1,7 @@
 # Discord bot created by TimothyBui
 # a bot designed to show a player's MMR utilizing WhatIsMyMMR.com
 # License: Creative Commons Attribution 2.0 Generic (CC BY 2.0)
-# Updated 2021-02-04
+# Updated 2021-02-05
 
 import os
 import discord
