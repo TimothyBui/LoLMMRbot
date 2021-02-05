@@ -1,6 +1,7 @@
 # Discord bot created by TimothyBui
 # a bot designed to show a player's MMR utilizing WhatIsMyMMR.com
 # License: Creative Commons Attribution 2.0 Generic (CC BY 2.0)
+# Updated 2021-02-04
 
 import os
 import discord
@@ -35,10 +36,17 @@ async def get_mmr(ctx, *, summoner_name: str):
 
   if data.get('error', None):
     await ctx.send(f"This summoner doesn't exist.")
+  elif (summoner_name.lower()=="derek chou"):
+    await ctx.send("Derek Chou's ranked MMR is PISSLOW.\nEstimated tier: Approximately **BAD** (GOLDIE LOCKS - WANNA BE DIAMOND)\nMMR resembles the top 38% of summoners in SLOWLO Q.")
   else:
     mmr = data['ranked']['avg']
     error = data['ranked']['err']
-    summary = data['ranked']['summary'].replace('<b>','').replace('</b><br><br><span class="symbol--micro"></span>','\n').replace('</b>','')
-    await ctx.send(f"{summoner_name}'s ranked MMR is {mmr}±{error}. \nTier Range: {summary}" if mmr else "That summoner is currently unranked.")
+    if mmr:
+      min = data['ranked']['tierData'][1]['min']
+      max = data['ranked']['tierData'][1]['max']
+      summary = data['ranked']['summary'].replace('<b>','**').replace('</b><br><br><span class="symbol--micro"></span>',f"** ({min}-{max})\n").replace('</b>','**')
+      await ctx.send(f"{summoner_name}'s ranked MMR is {mmr}±{error}. \nEstimated Tier: {summary} \n")
+    else: 
+      await ctx.send("That summoner is currently unranked.")
 
 bot.run(TOKEN)
